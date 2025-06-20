@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2734e0b9a6791c0b06eaff064d975ba5 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.css"/>
+</head>
+<body>
+    
+    
+<div style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index:9999;
+     background-color: #111; color: white; padding: 12px 20px; border: 2px solid #FF4500;
+     font-size: 18px; font-weight: bold; border-radius: 8px;
+     box-shadow: 0px 0px 10px #FF4500;">
+☢️ خريطة تفاعلية لتأثير ضرب مفاعل ديمونا النووي - مع اختيار طبقة الخريطة
+</div>
+    
+<div style="position: fixed; 
+     bottom: 50px; left: 50px; width: 290px; height: auto; 
+     background-color: #333; color: white; z-index:9999; font-size:14px;
+     border:2px solid #FF4500; padding: 15px; border-radius: 10px;
+     box-shadow: 0px 0px 10px #FF4500;">
+<b>☢️ مفتاح نطاقات الإشعاع:</b><br><br>
+<span style="color:#800000;">⬤</span> دمار كامل (0–10 كم)<br>
+<span style="color:#B22222;">⬤</span> إشعاع حاد (10–30 كم)<br>
+<span style="color:#FF8C00;">⬤</span> تلوث إشعاعي (30–100 كم)<br>
+<span style="color:#FFFF00;">⬤</span> إشعاع خفيف (100–300 كم)<br><br>
+<b>🌬️ اتجاه الرياح:</b><br>
+➤➤➤ من الجنوب الغربي نحو الشمال الشرقي<br><br>
+<b>🏳️ الأعلام = مواقع المدن والعواصم</b>
+</div>
+    
+            <div class="folium-map" id="map_2734e0b9a6791c0b06eaff064d975ba5" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2734e0b9a6791c0b06eaff064d975ba5 = L.map(
+                "map_2734e0b9a6791c0b06eaff064d975ba5",
+                {
+                    center: [31.0004, 35.1419],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 7,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b639e290578210ecde9aad9d7786dfe7 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var tile_layer_3942e101a4ab72f03e1e833fee792665 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var tile_layer_85c48251107450a1d1d4b2b3f33555cc = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var tile_layer_dafa0e6ba83666f6e677cd4c6e3f0dd9 = L.tileLayer(
+                "https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",
+                {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e. Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by-sa/3.0\"\u003eCC BY SA\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var tile_layer_221cf0471888065302ec8794531d3b30 = L.tileLayer(
+                "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+                {"attribution": "Map tiles by \u003ca href=\"http://stamen.com\"\u003eStamen Design\u003c/a\u003e, under \u003ca href=\"http://creativecommons.org/licenses/by/3.0\"\u003eCC BY 3.0\u003c/a\u003e. Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var circle_06d5f37d5ee24205341cac784a806187 = L.circle(
+                [31.0004, 35.1419],
+                {"bubblingMouseEvents": true, "color": "#800000", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#800000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10000, "stroke": true, "weight": 3}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+        var popup_e523160566f45ca91b9e45094d32e06c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_279b42f6e76e2351c84ad666971dcd0b = $(`<div id="html_279b42f6e76e2351c84ad666971dcd0b" style="width: 100.0%; height: 100.0%;">🔴 دمار كامل (0–10 كم)</div>`)[0];
+            popup_e523160566f45ca91b9e45094d32e06c.setContent(html_279b42f6e76e2351c84ad666971dcd0b);
+        
+
+        circle_06d5f37d5ee24205341cac784a806187.bindPopup(popup_e523160566f45ca91b9e45094d32e06c)
+        ;
+
+        
+    
+    
+            var circle_0dadcbbd13c2bb1975e53c8e048f7a5c = L.circle(
+                [31.0004, 35.1419],
+                {"bubblingMouseEvents": true, "color": "#B22222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#B22222", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+        var popup_114299ebe0a95c51cad142906d1f7b12 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1fbca406a4feee101b8133d21c49dd69 = $(`<div id="html_1fbca406a4feee101b8133d21c49dd69" style="width: 100.0%; height: 100.0%;">🟥 إشعاع حاد (10–30 كم)</div>`)[0];
+            popup_114299ebe0a95c51cad142906d1f7b12.setContent(html_1fbca406a4feee101b8133d21c49dd69);
+        
+
+        circle_0dadcbbd13c2bb1975e53c8e048f7a5c.bindPopup(popup_114299ebe0a95c51cad142906d1f7b12)
+        ;
+
+        
+    
+    
+            var circle_a7df9ea6a0780a33c87feb0c6e78553d = L.circle(
+                [31.0004, 35.1419],
+                {"bubblingMouseEvents": true, "color": "#FF8C00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF8C00", "fillOpacity": 0.4, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 100000, "stroke": true, "weight": 3}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+        var popup_63f03ec3cc1bd2281ef7169c2a151056 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b15477d31602bc467e6bc660fb157f7b = $(`<div id="html_b15477d31602bc467e6bc660fb157f7b" style="width: 100.0%; height: 100.0%;">🟧 تلوث إشعاعي (30–100 كم)</div>`)[0];
+            popup_63f03ec3cc1bd2281ef7169c2a151056.setContent(html_b15477d31602bc467e6bc660fb157f7b);
+        
+
+        circle_a7df9ea6a0780a33c87feb0c6e78553d.bindPopup(popup_63f03ec3cc1bd2281ef7169c2a151056)
+        ;
+
+        
+    
+    
+            var circle_bf42fd893539079637848ba14b601ec6 = L.circle(
+                [31.0004, 35.1419],
+                {"bubblingMouseEvents": true, "color": "#FFFF00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFFF00", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 300000, "stroke": true, "weight": 3}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+        var popup_be04981d42a04dba2c833b471656ff4e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0ea900f3f0971d74fc949d372b5ce5a2 = $(`<div id="html_0ea900f3f0971d74fc949d372b5ce5a2" style="width: 100.0%; height: 100.0%;">🟨 إشعاع خفيف (100–300 كم)</div>`)[0];
+            popup_be04981d42a04dba2c833b471656ff4e.setContent(html_0ea900f3f0971d74fc949d372b5ce5a2);
+        
+
+        circle_bf42fd893539079637848ba14b601ec6.bindPopup(popup_be04981d42a04dba2c833b471656ff4e)
+        ;
+
+        
+    
+    
+            var marker_2ab2381058f10b728c0d9528d2d19eb1 = L.marker(
+                [31.0004, 35.1419],
+                {}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var icon_0e8df1e842f4d3bb63eead1616914e8b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "nuclear", "iconColor": "white", "markerColor": "black", "prefix": "fa"}
+            );
+            marker_2ab2381058f10b728c0d9528d2d19eb1.setIcon(icon_0e8df1e842f4d3bb63eead1616914e8b);
+        
+    
+        var popup_fcd6a3f29e17ba1d9d8e75724da0d534 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_22b72bae1dfa18b719e531c3c6ad85fe = $(`<div id="html_22b72bae1dfa18b719e531c3c6ad85fe" style="width: 100.0%; height: 100.0%;">🧪 مفاعل ديمونا النووي</div>`)[0];
+            popup_fcd6a3f29e17ba1d9d8e75724da0d534.setContent(html_22b72bae1dfa18b719e531c3c6ad85fe);
+        
+
+        marker_2ab2381058f10b728c0d9528d2d19eb1.bindPopup(popup_fcd6a3f29e17ba1d9d8e75724da0d534)
+        ;
+
+        
+    
+    
+            var marker_87b8e2b4cb280419f4218fcb0bd37de2 = L.marker(
+                [31.7683, 35.2137],
+                {}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var icon_18651f0809b74639bd7e16079ebced67 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "flag", "iconColor": "white", "markerColor": "blue", "prefix": "fa"}
+            );
+            marker_87b8e2b4cb280419f4218fcb0bd37de2.setIcon(icon_18651f0809b74639bd7e16079ebced67);
+        
+    
+        var popup_c505ef2bfab5996626e692bd69879ae8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1b8743ea2ea6f8c778e43ed9cbac290b = $(`<div id="html_1b8743ea2ea6f8c778e43ed9cbac290b" style="width: 100.0%; height: 100.0%;">🇮🇱 القدس</div>`)[0];
+            popup_c505ef2bfab5996626e692bd69879ae8.setContent(html_1b8743ea2ea6f8c778e43ed9cbac290b);
+        
+
+        marker_87b8e2b4cb280419f4218fcb0bd37de2.bindPopup(popup_c505ef2bfab5996626e692bd69879ae8)
+        ;
+
+        
+    
+    
+            var marker_f43f47e73316cbc2f808604b68a79926 = L.marker(
+                [31.501, 34.466],
+                {}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var icon_fd7c50bbc61be8e4abcdf5a0ced7c99b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "flag", "iconColor": "white", "markerColor": "green", "prefix": "fa"}
+            );
+            marker_f43f47e73316cbc2f808604b68a79926.setIcon(icon_fd7c50bbc61be8e4abcdf5a0ced7c99b);
+        
+    
+        var popup_13a647fa9bb89a8aa958c4049b62d9de = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c3345f8be298b9efc0cbf88a05974d48 = $(`<div id="html_c3345f8be298b9efc0cbf88a05974d48" style="width: 100.0%; height: 100.0%;">🇵🇸 غزة</div>`)[0];
+            popup_13a647fa9bb89a8aa958c4049b62d9de.setContent(html_c3345f8be298b9efc0cbf88a05974d48);
+        
+
+        marker_f43f47e73316cbc2f808604b68a79926.bindPopup(popup_13a647fa9bb89a8aa958c4049b62d9de)
+        ;
+
+        
+    
+    
+            var marker_866e014bf1c3194dbdf4e2e06c31c728 = L.marker(
+                [31.9539, 35.9106],
+                {}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var icon_1ce73459d7ef4278212df82988e6dcfb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "flag", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_866e014bf1c3194dbdf4e2e06c31c728.setIcon(icon_1ce73459d7ef4278212df82988e6dcfb);
+        
+    
+        var popup_d4562f331433ece338018390183a1533 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_08ddbcf67f73ad71805938f6a67d3573 = $(`<div id="html_08ddbcf67f73ad71805938f6a67d3573" style="width: 100.0%; height: 100.0%;">🇯🇴 عمان</div>`)[0];
+            popup_d4562f331433ece338018390183a1533.setContent(html_08ddbcf67f73ad71805938f6a67d3573);
+        
+
+        marker_866e014bf1c3194dbdf4e2e06c31c728.bindPopup(popup_d4562f331433ece338018390183a1533)
+        ;
+
+        
+    
+    
+            var marker_210f9a0dda07d77f61b426483ecc648c = L.marker(
+                [30.0444, 31.2357],
+                {}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var icon_eb4e011f28026f10505a40e8c4d62bef = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "flag", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_210f9a0dda07d77f61b426483ecc648c.setIcon(icon_eb4e011f28026f10505a40e8c4d62bef);
+        
+    
+        var popup_ba27b7c6f176e6ad23390e0d5301eb66 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9e7e968a3b4c7bbaa18d52c42bd2e163 = $(`<div id="html_9e7e968a3b4c7bbaa18d52c42bd2e163" style="width: 100.0%; height: 100.0%;">🇪🇬 القاهرة</div>`)[0];
+            popup_ba27b7c6f176e6ad23390e0d5301eb66.setContent(html_9e7e968a3b4c7bbaa18d52c42bd2e163);
+        
+
+        marker_210f9a0dda07d77f61b426483ecc648c.bindPopup(popup_ba27b7c6f176e6ad23390e0d5301eb66)
+        ;
+
+        
+    
+    
+            var marker_7106731454019a8669ce9c38af3a6521 = L.marker(
+                [31.252, 34.7915],
+                {}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+        
+    
+            var icon_57bee7cc29ffa2e354fd0b43831cfd62 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "flag", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_7106731454019a8669ce9c38af3a6521.setIcon(icon_57bee7cc29ffa2e354fd0b43831cfd62);
+        
+    
+        var popup_60efcb784861ec5bef5532d4969c74b8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_04a79a45b4e73eac56f85a106ba58d41 = $(`<div id="html_04a79a45b4e73eac56f85a106ba58d41" style="width: 100.0%; height: 100.0%;">🇮🇱 بئر السبع</div>`)[0];
+            popup_60efcb784861ec5bef5532d4969c74b8.setContent(html_04a79a45b4e73eac56f85a106ba58d41);
+        
+
+        marker_7106731454019a8669ce9c38af3a6521.bindPopup(popup_60efcb784861ec5bef5532d4969c74b8)
+        ;
+
+        
+    
+    
+            var measure_control_926a333c6c627b6afbb87b7a698700d9 = new L.Control.Measure(
+                {"position": "topright", "primaryAreaUnit": "sqmeters", "primaryLengthUnit": "kilometers", "secondaryAreaUnit": "acres", "secondaryLengthUnit": "miles"});
+            map_2734e0b9a6791c0b06eaff064d975ba5.addControl(measure_control_926a333c6c627b6afbb87b7a698700d9);
+
+        
+    
+            var mouse_position_90b5afd3c837fc14ef7eac008b8353fd = new L.Control.MousePosition(
+                {"emptyString": "Unavailable", "lngFirst": false, "numDigits": 5, "position": "bottomright", "prefix": "", "separator": " : "}
+            );
+            mouse_position_90b5afd3c837fc14ef7eac008b8353fd.options["latFormatter"] =
+                undefined;
+            mouse_position_90b5afd3c837fc14ef7eac008b8353fd.options["lngFormatter"] =
+                undefined;
+            map_2734e0b9a6791c0b06eaff064d975ba5.addControl(mouse_position_90b5afd3c837fc14ef7eac008b8353fd);
+        
+    
+            var layer_control_a535c092c9fd1240219738c93c20025f = {
+                base_layers : {
+                    "\ud83d\uddfa\ufe0f OpenStreetMap" : tile_layer_b639e290578210ecde9aad9d7786dfe7,
+                    "\ud83c\udf10 CartoDB Positron" : tile_layer_3942e101a4ab72f03e1e833fee792665,
+                    "\ud83c\udf11 CartoDB Dark Matter" : tile_layer_85c48251107450a1d1d4b2b3f33555cc,
+                    "\u26f0\ufe0f Stamen Terrain" : tile_layer_dafa0e6ba83666f6e677cd4c6e3f0dd9,
+                    "\ud83d\udda4 Stamen Toner" : tile_layer_221cf0471888065302ec8794531d3b30,
+                },
+                overlays :  {
+                },
+            };
+            L.control.layers(
+                layer_control_a535c092c9fd1240219738c93c20025f.base_layers,
+                layer_control_a535c092c9fd1240219738c93c20025f.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_2734e0b9a6791c0b06eaff064d975ba5);
+            tile_layer_3942e101a4ab72f03e1e833fee792665.remove();
+            tile_layer_85c48251107450a1d1d4b2b3f33555cc.remove();
+            tile_layer_dafa0e6ba83666f6e677cd4c6e3f0dd9.remove();
+            tile_layer_221cf0471888065302ec8794531d3b30.remove();
+        
+</script>
+</html>
